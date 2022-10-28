@@ -17,10 +17,14 @@ main(int argc, char *argv[])
 
 	if (!(dpy = XOpenDisplay(0x0))) return 1;
 
-	XGrabButton(dpy, 1, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None);
-	XGrabButton(dpy, 2, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None);
-	XGrabButton(dpy, 3, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask, GrabModeAsync, GrabModeAsync, None, None);
-	XGrabKey(dpy, XKeysymToKeycode(dpy, XStringToKeysym("Return")), ControlMask|Mod1Mask, DefaultRootWindow(dpy), True, GrabModeAsync, GrabModeAsync);
+	XGrabButton(dpy, 1, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask,
+			GrabModeAsync, GrabModeAsync, None, None);
+	XGrabButton(dpy, 2, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask,
+			GrabModeAsync, GrabModeAsync, None, None);
+	XGrabButton(dpy, 3, Mod1Mask, DefaultRootWindow(dpy), True, ButtonPressMask|ButtonReleaseMask|PointerMotionMask,
+			GrabModeAsync, GrabModeAsync, None, None);
+	XGrabKey(dpy, XKeysymToKeycode(dpy, XStringToKeysym("t")), ControlMask|Mod1Mask, DefaultRootWindow(dpy),
+			True, GrabModeAsync, GrabModeAsync);
 
 	start.subwindow = None;
 	XSync(dpy, False);
@@ -28,7 +32,7 @@ main(int argc, char *argv[])
 	while (1 && !XNextEvent(dpy, &ev)) {
 		if (ev.type == KeyPress) {
 			kev = &ev.xkey;
-			if (kev->keycode == XKeysymToKeycode(dpy, XStringToKeysym("Return"))) {
+			if (kev->keycode == XKeysymToKeycode(dpy, XStringToKeysym("t"))) {
 				if (fork() == 0) {
 					if (dpy)
 						close(ConnectionNumber(dpy));
